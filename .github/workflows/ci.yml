@@ -46,6 +46,14 @@ jobs:
     - name: Build release
       run: cargo build --features cli --release --verbose
 
+    # THIRD-PARTY-NOTICES asserts what a distributed copy contains. A
+    # hand-kept one goes stale the moment a dependency moves, and a stale
+    # notice is worse than none — so both are generated, and this fails if
+    # they no longer match what cargo resolved.
+    - name: Check the third-party notices are up to date
+      if: runner.os == 'Linux'
+      run: scripts/third-party-notices.py --check
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
