@@ -70,7 +70,9 @@ jobs:
           mkdir -p dist
           cp target/${{ matrix.target }}/release/bridge-solver${{ matrix.artifact_suffix }} dist/bridge-solver-${{ matrix.asset_suffix }}${{ matrix.artifact_suffix }}
           cp target/${{ matrix.target }}/release/solver-diag${{ matrix.artifact_suffix }} dist/solver-diag-${{ matrix.asset_suffix }}${{ matrix.artifact_suffix }}
-          cp LICENSE-MIT LICENSE-APACHE README.md dist/
+          # The licences of what bridge-solver links ask that their copyright
+          # notices travel with copies. This is the copy.
+          cp LICENSE-MIT LICENSE-APACHE THIRD-PARTY-NOTICES README.md dist/
 
       - name: Create tarball (Linux and macOS)
         if: matrix.os != 'windows-latest'
@@ -82,6 +84,7 @@ jobs:
             solver-diag-${{ matrix.asset_suffix }} \
             LICENSE-MIT \
             LICENSE-APACHE \
+            THIRD-PARTY-NOTICES \
             README.md
 
       - name: Create zip (Windows)
@@ -94,6 +97,7 @@ jobs:
             solver-diag-${{ matrix.asset_suffix }}.exe \
             LICENSE-MIT \
             LICENSE-APACHE \
+            THIRD-PARTY-NOTICES \
             README.md
 
       - name: Upload Release Assets
@@ -153,6 +157,7 @@ jobs:
           # nothing inside a tarball and only confuses whoever unpacks it.
           rm -f wasm/pkg/.gitignore
           cp LICENSE-MIT LICENSE-APACHE wasm/pkg/
+          cp web/public/THIRD-PARTY-NOTICES wasm/pkg/
           tar -czf dist/bridge-solver-wasm.tar.gz -C wasm pkg
 
       - name: Upload Release Assets

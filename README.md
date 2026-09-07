@@ -135,3 +135,13 @@ Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or the
 [MIT license](LICENSE-MIT) at your option — the same pairing upstream adopted in
 [`dc2d4df`](https://github.com/macroxue/bridge-solver/commit/dc2d4df). Both files
 ship in every release archive.
+
+[`THIRD-PARTY-NOTICES`](THIRD-PARTY-NOTICES) covers the packages a distributed
+copy is built from, whose own licences ask the same of us;
+`web/public/THIRD-PARTY-NOTICES` is the equivalent for the WebAssembly build,
+which is a different dependency graph. Both are generated from what cargo
+resolved, by `scripts/third-party-notices.py`, and checked in CI — a hand-kept
+notice file goes stale the moment a dependency moves, and a stale notice asserts
+something untrue about what a copy contains. They carry no version numbers, and
+they only ever grow: CI fails when something resolved that the file does not
+credit, which is the direction that matters. Both ship in the release archives.
